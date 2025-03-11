@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Text file output generation for the Color Palette Extractor.
+Text file output generation for the Color Palette Extractor 2.0
 """
 
 import os
