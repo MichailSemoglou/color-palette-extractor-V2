@@ -27,8 +27,8 @@ This Python script extracts color palettes from images and generates various col
 1. Clone this repository:
 
    ```
-   git clone https://github.com/MichailSemoglou/color-palette-extractor.git
-   cd color-palette-extractor
+   git clone https://github.com/MichailSemoglou/color-palette-extractor-V2.git
+   cd color-palette-extractor-V2
    ```
 
 2. Create a virtual environment (optional but recommended):
@@ -59,7 +59,7 @@ This Python script extracts color palettes from images and generates various col
 Run the script from the command line as follows:
 
 ```
-color-palette-extractor -i path/to/your/image.jpg -o output_folder -n 6
+color-palette-extractor-V2 -i path/to/your/image.jpg -o output_folder -n 6
 ```
 
 #### Options:
