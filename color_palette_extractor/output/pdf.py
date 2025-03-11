@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-PDF report generation for the Color Palette Extractor.
+PDF report generation for the Color Palette Extractor 2.0
 """
 
 import os
