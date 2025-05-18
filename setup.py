@@ -14,7 +14,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "color-palette-extractor=color_palette_extractor.cli:main",
+            "color-palette-extractor-V2=color_palette_extractor.cli:main",
         ],
     },
     python_requires=">=3.6",
