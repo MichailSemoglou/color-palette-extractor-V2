@@ -35,7 +35,11 @@ def save_palette_and_harmonies(color_palette, harmonies, filename="color_info.tx
             for i, color in enumerate(color_palette):
                 f.write(f"Color {i+1}:\n")
                 f.write(f"  HEX: {color[0]}\n")
-                f.write(f"  RGB: {color[1]}\n")
+                
+                # Convert NumPy integers to Python integers for RGB values
+                rgb_values = tuple(int(val) for val in color[1])
+                f.write(f"  RGB: {rgb_values}\n")
+                
                 f.write(f"  CMYK: {color[2]}\n\n")
             
             f.write("\nColor Harmonies:\n")
