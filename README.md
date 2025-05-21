@@ -1,22 +1,20 @@
-# Color Palette Extractor V2
+# Color Palette Extractor V2.1
 
 This Python script extracts color palettes from images and generates various color harmonies. It's designed for design students and professionals to analyze and utilize color schemes in their projects.
 
-## New in Version 2
+## New in Version 2.1
 
-- **Batch Processing**: Process multiple images or entire directories at once
-- **Multi-threading Support**: Process images in parallel for faster execution
-- **Improved CLI**: Enhanced command-line interface with more options
-- **Graphical User Interface**: New GUI for easier interaction
-- **Caching System**: Avoid reprocessing previously analyzed images
-- **Better Output Management**: Organized output structure for multiple images
-- **Improved Error Handling**: More robust error handling and logging
+- **Emotional Color Analysis**: Analyze the psychological impact of colors to guide brand design decisions
+- **Enhanced PDF Reports**: Comprehensive reports now include emotional analysis with brand recommendations
+- **Improved Error Handling**: More robust handling of edge cases
 
 ## Features
 
 - Extract dominant colors from any image
 - Generate color harmonies (Complementary, Analogous, Triadic, Tetradic, Tints, and Shades)
-- Create a PDF report with visual representation of colors and harmonies
+- Analyze emotional and psychological effects of colors
+- Provide brand design recommendations based on color psychology
+- Create a PDF report with visual representation of colors, harmonies, and analysis
 - Save color information in a text file for easy reference
 - Process single images or entire directories
 - Process images recursively in subdirectories
@@ -74,6 +72,7 @@ color-palette-extractor-V2 -i path/to/your/image.jpg -o output_folder -n 6
 - `--no-cache`: Disable caching of results
 - `--pdf-only`: Generate only PDF reports (no text files)
 - `--text-only`: Generate only text files (no PDF reports)
+- `--emotional-analysis`: Include psychological and emotional analysis of colors
 - `--log-level`: Set logging level (debug, info, warning, error)
 - `--log-file`: Save log to file
 - `-v, --version`: Show version information
@@ -99,6 +98,7 @@ You can also use the library directly in your Python code:
 ```python
 from color_palette_extractor import extract_color_palette, get_harmonies
 from color_palette_extractor.output import save_palette_to_pdf, save_palette_and_harmonies
+from color_palette_extractor.analysis.emotional import analyze_palette_emotions
 
 # Extract palette from an image
 palette = extract_color_palette("path/to/image.jpg", num_colors=6)
@@ -106,9 +106,18 @@ palette = extract_color_palette("path/to/image.jpg", num_colors=6)
 # Generate harmonies
 harmonies = get_harmonies(palette)
 
+# Generate emotional analysis
+emotional_analysis = analyze_palette_emotions(palette)
+
 # Save outputs
 save_palette_and_harmonies(palette, harmonies, "output/color_info.txt")
-save_palette_to_pdf(palette, harmonies, "output/color_palette.pdf", "path/to/image.jpg")
+save_palette_to_pdf(
+    palette, 
+    harmonies, 
+    "output/color_palette.pdf", 
+    "path/to/image.jpg",
+    emotional_analysis=emotional_analysis
+)
 ```
 
 For batch processing:
@@ -140,10 +149,44 @@ The script will generate two output files for each processed image:
    - HEX, RGB, and CMYK values for each color in the extracted palette
    - Color harmony information (Complementary, Analogous, Triadic, Tetradic, Tints, and Shades)
 
-2. `{image_name}_palette.pdf`: A visual report in PDF format, including:
+2. {image_name}_emotions.txt: A text file containing emotional analysis of the color palette:
+
+   - Overall emotional impact of the palette
+   - Harmony analysis and brand recommendations
+   - Emotional associations of individual colors
+
+3. `{image_name}_palette.pdf`: A visual report in PDF format, including:
    - The original image
    - The extracted color palette
    - Visual representations of each color harmony
+   - Emotional analysis with brand design recommendations
+
+## Emotional Color Analysis
+
+The emotional analysis feature provides insights into the psychological impact of colors:
+
+   - **Dominant Emotions**: The primary emotional responses evoked by the palette
+   - **Harmony Analysis**: How the color relationships affect perception
+   - **Brand Recommendations**: Suggested industry fits and applications
+   - **Individual Color Psychology**: Emotional associations of each color
+
+This feature helps designers make informed decisions about color choices for branding, marketing materials, websites, and other design projects.
+
+## Citation
+
+If you use Color Palette Extractor in your research or design project, please cite it as follows:
+
+`Semoglou, M. (2025). Color Palette Extractor V2.1 [Computer software]. 
+Retrieved from https://github.com/MichailSemoglou/color-palette-extractor`
+
+BibTeX:
+
+`@software{semoglou2025colorpalette,
+  author = {Semoglou, Michail},
+  title = {Color Palette Extractor V2.1},
+  year = {2025},
+  url = {https://github.com/MichailSemoglou/color-palette-extractor}
+}`
 
 ## Troubleshooting
 
