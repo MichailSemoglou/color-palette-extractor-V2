@@ -116,26 +116,27 @@ def identify_color_name(hsv):
         else:
             return "gray"
             
-    # Handle brown specially (low saturation reds/oranges/yellows)
-    if (h_deg < 50 or h_deg > 330) and s < 0.4 and v < 0.7:
+    # Handle brown specifically
+    # Browns are generally low-value, low-to-medium saturation oranges/yellows/reds
+    if ((h_deg >= 15 and h_deg < 45) or (h_deg >= 0 and h_deg < 15)) and v < 0.65 and s < 0.8:
         return "brown"
     
     # Determine hue-based color name
-    if h_deg < 30 or h_deg >= 330:
+    if h_deg < 15 or h_deg >= 345:
         return "red"
-    elif h_deg < 60:
+    elif h_deg < 45:
         return "orange"
-    elif h_deg < 90:
+    elif h_deg < 75:
         return "yellow"
-    elif h_deg < 150:
+    elif h_deg < 165:
         return "green"
     elif h_deg < 195:
         return "teal"
-    elif h_deg < 240:
+    elif h_deg < 255:
         return "blue"
-    elif h_deg < 270:
+    elif h_deg < 285:
         return "purple"
-    elif h_deg < 330:
+    elif h_deg < 345:
         return "pink"
     
     # Default fallback
