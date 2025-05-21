@@ -135,6 +135,13 @@ def parse_arguments():
         help="Disable caching of results"
     )
     
+    # NEW: Emotional analysis option
+    parser.add_argument(
+        "--emotional-analysis",
+        action="store_true",
+        help="Include psychological and emotional analysis of the color palette"
+    )
+    
     # Logging options
     parser.add_argument(
         "--log-level",
@@ -205,23 +212,57 @@ def main():
             # Create cache manager if enabled
             cache_manager = None if args.no_cache else CacheManager()
             
-            # Process the image
-            result = process_images(
-                [image_path],
-                num_colors=args.num_colors,
-                output_dir=args.output_dir,
-                generate_pdf=generate_pdf,
-                generate_text=generate_text,
-                use_cache=not args.no_cache,
-                max_workers=1  # No parallelism for single image
-            )
+            # Extract color palette
+            color_palette = extract_color_palette(image_path, args.num_colors)
             
-            if result['successful'] == 0:
-                logger.error(f"Failed to process image: {result['results'][0].get('error', 'Unknown error')}")
-                return 1
+            # Generate harmonies
+            harmonies = get_harmonies(color_palette)
             
-            logger.info(f"Successfully processed image in {result['processing_time']:.2f} seconds")
-            logger.info(f"Output files: {result['results'][0]['output_files']}")
+            # Determine output directory
+            output_dir = args.output_dir or os.path.dirname(image_path)
+            os.makedirs(output_dir, exist_ok=True)
+            
+            # Generate base filename
+            basename = os.path.splitext(os.path.basename(image_path))[0]
+            
+            # Save palette and harmonies to text file
+            if generate_text:
+                text_filename = os.path.join(output_dir, f"{basename}_info.txt")
+                save_palette_and_harmonies(color_palette, harmonies, filename=text_filename)
+                logger.info(f"Saved color information to {text_filename}")
+            
+            # Generate emotional analysis if requested
+            emotional_analysis = None
+            if args.emotional_analysis:
+                try:
+                    from color_palette_extractor.analysis.emotional import analyze_palette_emotions
+                    from color_palette_extractor.output.emotional import save_emotional_analysis
+                    
+                    logger.info("Generating emotional analysis...")
+                    emotional_analysis = analyze_palette_emotions(color_palette)
+                    
+                    if generate_text:
+                        emotional_filename = os.path.join(output_dir, f"{basename}_emotions.txt")
+                        save_emotional_analysis(emotional_analysis, filename=emotional_filename)
+                        logger.info(f"Saved emotional analysis to {emotional_filename}")
+                except Exception as e:
+                    logger.error(f"Error generating emotional analysis: {str(e)}")
+                    logger.debug("Emotional analysis error details:", exc_info=True)
+                    emotional_analysis = None
+            
+            # Save palette to PDF
+            if generate_pdf:
+                pdf_filename = os.path.join(output_dir, f"{basename}_palette.pdf")
+                save_palette_to_pdf(
+                    color_palette, 
+                    harmonies, 
+                    filename=pdf_filename, 
+                    image_filename=image_path,
+                    emotional_analysis=emotional_analysis
+                )
+                logger.info(f"Saved color palette PDF to {pdf_filename}")
+            
+            logger.info(f"Successfully processed image in {time.time() - start_time:.2f} seconds")
             
         elif args.directory:
             # Directory mode
@@ -232,6 +273,11 @@ def main():
                 logger.error(f"Directory not found: {dir_path}")
                 return 1
             
+            # Create config dictionary for batch processing
+            config = {
+                "emotional_analysis": args.emotional_analysis
+            }
+            
             # Process the directory
             result = process_folder(
                 dir_path,
@@ -241,7 +287,8 @@ def main():
                 generate_pdf=generate_pdf,
                 generate_text=generate_text,
                 use_cache=not args.no_cache,
-                max_workers=args.jobs
+                max_workers=args.jobs,
+                config=config
             )
             
             if result['total'] == 0:
@@ -273,6 +320,11 @@ def main():
             
             logger.info(f"Found {len(image_paths)} image paths in list")
             
+            # Create config dictionary for batch processing
+            config = {
+                "emotional_analysis": args.emotional_analysis
+            }
+            
             # Process the images
             result = process_images(
                 image_paths,
@@ -281,7 +333,8 @@ def main():
                 generate_pdf=generate_pdf,
                 generate_text=generate_text,
                 use_cache=not args.no_cache,
-                max_workers=args.jobs
+                max_workers=args.jobs,
+                config=config
             )
             
             logger.info(f"Processed {result['total']} images in {result['processing_time']:.2f} seconds")
