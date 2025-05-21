@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: "Semoglou"
+    given-names: "Michail"
+title: "Color Palette Extractor"
+version: 2.1.0
+date-released: 2025-05-21
+url: "https://github.com/MichailSemoglou/color-palette-extractor-V2"
+repository-code: "https://github.com/MichailSemoglou/color-palette-extractor-V2"
+license: MIT
+type: software
+abstract: >-
+  A Python tool that extracts color palettes from images, generates
+  various color harmonies, and provides psychological and emotional
+  analysis of colors for brand design.
+keywords:
+  - color-palette
+  - color-extraction
+  - design-tools
+  - image-processing
+  - color-psychology
+  - brand-design
