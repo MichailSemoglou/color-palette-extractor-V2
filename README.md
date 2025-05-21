@@ -175,7 +175,6 @@ This feature helps designers make informed decisions about color choices for bra
 ## Citation
 
 If you use Color Palette Extractor in your research or design project, please cite it as follows:
-
 Semoglou, M. (2025). Color Palette Extractor V2.1 [Computer software]. 
 Retrieved from https://github.com/MichailSemoglou/color-palette-extractor
 
