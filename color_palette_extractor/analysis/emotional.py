@@ -86,11 +86,11 @@ COLOR_EMOTIONS = {
 
 # Harmony psychology effects
 HARMONY_EFFECTS = {
-    "complementary": "Creates a vibrant, high-contrast palette. Ideal for brands wanting to stand out or create energy. Can be visually striking and commanding of attention.",
-    "analogous": "Creates a harmonious, cohesive palette with low tension. Great for creating a unified, professional look that feels comfortable and coordinated.",
-    "triadic": "Offers visual vibrancy while maintaining balance. Good for creative and playful brands that still want a sense of harmony and completeness.",
-    "tetradic": "Provides a rich, varied palette with multiple accent possibilities. Best for brands with diverse product lines or who need a complex visual language.",
-    "monochromatic": "Creates a sophisticated, cohesive palette. Excellent for luxury brands, minimalist designs, or when you want the content to be the focus rather than the colors."
+    "complementary": "Creates a vibrant, high-contrast palette. Ideal for brands wanting to stand out or create energy. Can be visually striking and commanding of attention",
+    "analogous": "Creates a harmonious, cohesive palette with low tension. Great for creating a unified, professional look that feels comfortable and coordinated",
+    "triadic": "Offers visual vibrancy while maintaining balance. Good for creative and playful brands that still want a sense of harmony and completeness",
+    "tetradic": "Provides a rich, varied palette with multiple accent possibilities. Best for brands with diverse product lines or who need a complex visual language",
+    "monochromatic": "Creates a sophisticated, cohesive palette. Excellent for luxury brands, minimalist designs, or when you want the content to be the focus rather than the colors"
 }
 
 def identify_color_name(hsv):
@@ -269,8 +269,13 @@ def analyze_palette_emotions(color_palette):
         recommendations = f"This color palette evokes feelings of {emotion_str}. "
         recommendations += f"It would be well-suited for brands in {industry_str}. "
         
+        # Fix for the double period issue - check if harmony effect text already ends with period
         if dominant_harmony:
-            recommendations += f"The {dominant_harmony} color relationship creates {HARMONY_EFFECTS.get(dominant_harmony, 'a balanced visual effect')}. "
+            harmony_effect = HARMONY_EFFECTS.get(dominant_harmony, "a balanced visual effect")
+            if harmony_effect.endswith("."):
+                recommendations += f"The {dominant_harmony} color relationship {harmony_effect[0].lower() + harmony_effect[1:]} "
+            else:
+                recommendations += f"The {dominant_harmony} color relationship creates {harmony_effect}. "
         
         results["overall"]["brand_recommendations"] = recommendations
     
