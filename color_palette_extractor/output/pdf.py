@@ -89,6 +89,8 @@ def save_palette_to_pdf(color_palette, harmonies, filename="color_palette.pdf", 
                                     leading=14, alignment=TA_LEFT, spaceBefore=12, spaceAfter=6)
     normal_style = ParagraphStyle(name='Normal', fontName=body_font, fontSize=10,
                                  leading=12, alignment=TA_LEFT, spaceBefore=6, spaceAfter=6)
+    color_name_style = ParagraphStyle(name='ColorName', fontName=title_font, fontSize=11,
+                                    leading=13, alignment=TA_LEFT, spaceBefore=10, spaceAfter=4)
     
     # Title
     title = f"Color Palette and Harmonies"
@@ -172,46 +174,33 @@ def save_palette_to_pdf(color_palette, harmonies, filename="color_palette.pdf", 
         if "colors" in emotional_analysis and emotional_analysis["colors"]:
             elements.append(Paragraph("Individual Color Emotions", subheading_style))
             
-            # Create a table for individual colors
-            color_data = [["Color", "Name", "Emotions", "Associations", "Brand Fit"]]
-            
+            # Use individual color blocks instead of a table
             for color_info in emotional_analysis["colors"]:
                 hex_color = color_info.get("hex", "#FFFFFF")
                 color_name = color_info.get("color_name", "").capitalize()
-                emotions = ", ".join(color_info.get("emotions", [])[:3])  # Limit to top 3
-                associations = ", ".join(color_info.get("associations", [])[:3])  # Limit to top 3
-                brand_fit = ", ".join(color_info.get("brand_fit", [])[:3])  # Limit to top 3
+                emotions = ", ".join(color_info.get("emotions", []))
+                associations = ", ".join(color_info.get("associations", []))
+                brand_fit = ", ".join(color_info.get("brand_fit", []))
                 
-                color_data.append([
-                    hex_color,
-                    color_name,
-                    emotions,
-                    associations,
-                    brand_fit
-                ])
-            
-            # Create and style the table
-            color_table = Table(color_data, colWidths=[60, 70, 120, 120, 120])
-            
-            table_style = TableStyle([
-                ('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey),
-                ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
-                ('ALIGN', (0, 0), (-1, 0), 'CENTER'),
-                ('FONTNAME', (0, 0), (-1, 0), title_font),
-                ('FONTSIZE', (0, 0), (-1, 0), 10),
-                ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-                ('GRID', (0, 0), (-1, -1), 1, colors.black),
-            ])
-            
-            # Add background colors to the first column
-            for i, row in enumerate(color_data[1:], 1):
-                hex_color = row[0]
-                table_style.add('BACKGROUND', (0, i), (0, i), colors.HexColor(hex_color))
-                text_color = colors.white if is_dark(hex_color) else colors.black
-                table_style.add('TEXTCOLOR', (0, i), (0, i), text_color)
-            
-            color_table.setStyle(table_style)
-            elements.append(color_table)
+                # Create a colored box
+                color_box_data = [[hex_color]]
+                color_box = Table(color_box_data, colWidths=[60], rowHeights=[30])
+                color_box.setStyle(TableStyle([
+                    ('ALIGN', (0, 0), (0, 0), 'CENTER'),
+                    ('VALIGN', (0, 0), (0, 0), 'MIDDLE'),
+                    ('BACKGROUND', (0, 0), (0, 0), colors.HexColor(hex_color)),
+                    ('TEXTCOLOR', (0, 0), (0, 0), colors.white if is_dark(hex_color) else colors.black),
+                    ('FONTNAME', (0, 0), (0, 0), body_font),
+                    ('FONTSIZE', (0, 0), (0, 0), 8),
+                    ('BOX', (0, 0), (0, 0), 1, colors.black),
+                ]))
+                
+                elements.append(Spacer(1, 0.1*inch))
+                elements.append(color_box)
+                elements.append(Paragraph(f"<b>{color_name} ({hex_color})</b>", color_name_style))
+                elements.append(Paragraph(f"<b>Emotional Response:</b> {emotions}", normal_style))
+                elements.append(Paragraph(f"<b>Associations:</b> {associations}", normal_style))
+                elements.append(Paragraph(f"<b>Brand Fit:</b> {brand_fit}", normal_style))
 
     # Add harmonies
     harmony_pages = ["Original Color Palette"]  # Start with the palette page
