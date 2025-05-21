@@ -1,119 +1,121 @@
 # Color Palette Extractor V2.1
 
-This Python script extracts color palettes from images and generates various color harmonies. It's designed for design students and professionals to analyze and utilize color schemes in their projects.
-
-## New in Version 2.1
-
-- **Emotional Color Analysis**: Analyze the psychological impact of colors to guide brand design decisions
-- **Enhanced PDF Reports**: Comprehensive reports now include emotional analysis with brand recommendations
-- **Improved Error Handling**: More robust handling of edge cases
-
-## New in Version 2
-
-- **Batch Processing**: Process multiple images or entire directories at once
-- **Multi-threading Support**: Process images in parallel for faster execution
-- **Improved CLI**: Enhanced command-line interface with more options
-- **Graphical User Interface**: New GUI for easier interaction
-- **Caching System**: Avoid reprocessing previously analyzed images
-- **Better Output Management**: Organized output structure for multiple images
-- **Improved Error Handling**: More robust error handling and logging
+A Python tool that extracts color palettes from images, generates various color harmonies, and provides psychological and emotional analysis of colors for brand design.
 
 ## Features
 
-- Extract dominant colors from any image
+- Extract dominant colors from any image using K-means clustering
 - Generate color harmonies (Complementary, Analogous, Triadic, Tetradic, Tints, and Shades)
-- Analyze emotional and psychological effects of colors
-- Provide brand design recommendations based on color psychology
-- Create a PDF report with visual representation of colors, harmonies, and analysis
-- Save color information in a text file for easy reference
-- Process single images or entire directories
-- Process images recursively in subdirectories
-- Parallel processing for improved performance
+- Analyze emotional and psychological effects of colors with brand design recommendations
+- Create comprehensive PDF reports with visual representation of colors and harmonies
+- Save color information in structured text files for easy reference
+- Process single images, multiple files, or entire directories in parallel
+- Cache results to avoid reprocessing previously analyzed images
+- Use via command-line or graphical user interface
+
+## What's New in Version 2.1
+
+- **Emotional Color Analysis**: Psychological impact assessment of colors for brand design
+- **Enhanced PDF Reports**: Comprehensive reports with emotional analysis and brand recommendations
+- **Improved Error Handling**: More robust handling of edge cases and error conditions
+- **Better Documentation**: Expanded documentation and code comments
 
 ## Installation
 
-1. Clone this repository:
+### Prerequisites
 
-   ```
-   git clone https://github.com/MichailSemoglou/color-palette-extractor-V2.git
-   cd color-palette-extractor-V2
-   ```
+- Python 3.8 or higher
+- Required packages: numpy, scikit-learn, Pillow, reportlab, tqdm
 
-2. Create a virtual environment (optional but recommended):
+### Quick Install
 
-   ```
-   python -m venv venv
-   source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
-   ```
+```bash
+# Clone the repository
+git clone https://github.com/MichailSemoglou/color-palette-extractor-V2.git
+cd color-palette-extractor-V2
 
-3. Install the package and dependencies:
+# Set up a virtual environment (recommended)
+python -m venv venv
+source venv/bin/activate  # On Windows, use: venv\Scripts\activate
 
-   ```
-   pip install -e .
-   ```
+# Install the package and dependencies
+pip install -e .
+```
 
-   Or install just the required dependencies:
+### Font Installation
 
-   ```
-   pip install -r requirements.txt
-   ```
+This tool uses the Inter font for its PDF reports. You'll need to:
 
-4. [Download](https://rsms.me/inter/) the Inter font files (Inter-Bold.ttf and Inter-Regular.ttf) and place them in the `color_palette_extractor/fonts` directory.
+1. [Download Inter fonts](https://rsms.me/inter/) (specifically Inter-Bold.ttf and Inter-Regular.ttf)
+2. Create a `fonts` directory under `color_palette_extractor` if it doesn't exist
+3. Place the downloaded font files in the `color_palette_extractor/fonts` directory
+
+If the Inter fonts are not available, the tool will automatically fall back to standard fonts.
 
 ## Usage
 
 ### Command Line Interface
 
-Run the script from the command line as follows:
+```bash
+# Process a single image with default settings
+color-palette-extractor-V2 -i path/to/image.jpg
 
+# Process with specific options
+color-palette-extractor-V2 -i path/to/image.jpg -o output_folder -n 8 --emotional-analysis
+
+# Process all images in a directory
+color-palette-extractor-V2 -d path/to/images/ -o output_folder --recursive
+
+# Process images listed in a file
+color-palette-extractor-V2 -f image_list.txt -o output_folder
 ```
-color-palette-extractor-V2 -i path/to/your/image.jpg -o output_folder -n 6
-```
 
-#### Options:
+#### Command-Line Options
 
-- `-i, --image`: Path to a single image file
-- `-d, --directory`: Path to a directory of images
-- `-f, --file-list`: Path to a text file containing image paths (one per line)
-- `-o, --output-dir`: Directory to save results
-- `-n, --num-colors`: Number of colors to extract (1-12, default: 6)
-- `-j, --jobs`: Number of parallel jobs (default: number of CPU cores)
-- `--recursive`: Process directories recursively
-- `--no-cache`: Disable caching of results
-- `--pdf-only`: Generate only PDF reports (no text files)
-- `--text-only`: Generate only text files (no PDF reports)
-- `--emotional-analysis`: Include psychological and emotional analysis of colors
-- `--log-level`: Set logging level (debug, info, warning, error)
-- `--log-file`: Save log to file
-- `-v, --version`: Show version information
+| Option | Description |
+| ------ | ----------- |
+| `-i, --image PATH` | Path to a single image file |
+| `-d, --directory PATH` | Path to a directory of images |
+| `-f, --file-list PATH` | Path to a text file containing image paths (one per line) |
+| `-o, --output-dir PATH` | Directory to save results (default: same as input) |
+| `-n, --num-colors N` | Number of colors to extract (1-12, default: 6) |
+| `-j, --jobs N` | Number of parallel jobs (default: number of CPU cores) |
+| `--recursive` | Process directories recursively |
+| `--no-cache` | Disable caching of results |
+| `--pdf-only` | Generate only PDF reports (no text files) |
+| `--text-only` | Generate only text files (no PDF reports) |
+| `--emotional-analysis` | Include psychological and emotional analysis of colors |
+| `--log-level LEVEL` | Set logging level (debug, info, warning, error) |
+| `--log-file PATH` | Save log to specified file |
+| `-v, --version` | Show version information |
 
 ### Graphical User Interface
 
-To use the GUI, run:
+For a more user-friendly experience, you can use the graphical interface:
 
-```
+```bash
 python -m color_palette_extractor.gui
 ```
 
 The GUI allows you to:
-- Select individual image files or directories
-- Choose output options
+- Select individual image files or entire directories
+- Configure output options and settings
 - Preview images before processing
-- See processing logs in real-time
+- Monitor processing logs in real-time
 
 ### Python API
 
-You can also use the library directly in your Python code:
+You can also use the tool as a library in your Python code:
 
 ```python
 from color_palette_extractor import extract_color_palette, get_harmonies
 from color_palette_extractor.output import save_palette_to_pdf, save_palette_and_harmonies
 from color_palette_extractor.analysis.emotional import analyze_palette_emotions
 
-# Extract palette from an image
+# Extract colors from an image
 palette = extract_color_palette("path/to/image.jpg", num_colors=6)
 
-# Generate harmonies
+# Generate color harmonies
 harmonies = get_harmonies(palette)
 
 # Generate emotional analysis
@@ -144,7 +146,7 @@ result = process_folder(
     generate_pdf=True,
     generate_text=True,
     use_cache=True,
-    config={"emotional_analysis": True}  # Enable emotional analysis
+    config={"emotional_analysis": True}
 )
 
 print(f"Processed {result['total']} images")
@@ -153,41 +155,121 @@ print(f"Successful: {result['successful']}, Failed: {result['failed']}")
 
 ## Output Files
 
-The script will generate several output files for each processed image:
+For each processed image, the tool generates:
 
-1. `{image_name}_info.txt`: A text file containing detailed color information, including:
-   - HEX, RGB, and CMYK values for each color in the extracted palette
-   - Color harmony information (Complementary, Analogous, Triadic, Tetradic, Tints, and Shades)
+### 1. Color Information Text File
 
-2. `{image_name}_emotions.txt`: A text file containing emotional analysis of the color palette:
-   - Overall emotional impact of the palette
-   - Harmony analysis and brand recommendations
-   - Emotional associations of individual colors
+`{image_name}_info.txt` contains:
+- HEX, RGB, and CMYK values for each color in the extracted palette
+- Color harmony information (Complementary, Analogous, Triadic, Tetradic, Tints, Shades)
 
-3. `{image_name}_palette.pdf`: A visual report in PDF format, including:
-   - The original image
-   - The extracted color palette
-   - Visual representations of each color harmony
-   - Emotional analysis with brand design recommendations
+### 2. Emotional Analysis Text File
+
+`{image_name}_emotions.txt` provides:
+- Overall emotional impact of the palette
+- Harmony analysis and brand suitability
+- Individual emotional associations for each color
+
+### 3. Visual PDF Report
+
+`{image_name}_palette.pdf` includes:
+- The original image
+- Visual representation of the extracted color palette
+- Color harmony visualizations
+- Emotional analysis with brand design recommendations
+
+## Understanding Color Harmonies
+
+The tool generates several types of color harmonies:
+
+| Harmony Type | Description |
+| ------------ | ----------- |
+| **Complementary** | Colors opposite each other on the color wheel, creating high contrast |
+| **Analogous** | Colors adjacent to each other on the color wheel, creating cohesion |
+| **Triadic** | Three colors evenly spaced on the color wheel, providing balance |
+| **Tetradic** | Four colors arranged in two complementary pairs, offering variety |
+| **Tints** | Lighter variations of a color (adding white) |
+| **Shades** | Darker variations of a color (adding black) |
 
 ## Emotional Color Analysis
 
-The emotional analysis feature provides insights into the psychological impact of colors:
+The emotional analysis feature provides insights into:
 
-- **Dominant Emotions**: The primary emotional responses evoked by the palette
-- **Harmony Analysis**: How the color relationships affect perception
+- **Dominant Emotions**: Primary emotional responses evoked by the palette
+- **Harmony Analysis**: How color relationships affect perception
 - **Brand Recommendations**: Suggested industry fits and applications
-- **Individual Color Psychology**: Emotional associations of each color
+- **Individual Color Psychology**: Emotional associations for each color
 
-This feature helps designers make informed decisions about color choices for branding, marketing materials, websites, and other design projects.
+This helps designers make informed decisions about color choices for branding, marketing materials, websites, and other design projects.
+
+## Troubleshooting
+
+### Common Issues
+
+1. **ModuleNotFoundError**: Ensure you've installed all dependencies with `pip install -r requirements.txt`
+
+2. **Font related errors**: If you see errors mentioning Inter fonts, follow the font installation steps above
+
+3. **Permission denied when saving output**: Check that you have write permissions in the output directory
+
+4. **Memory errors with large directories**: Try reducing the maximum image dimension in the configuration or process fewer images at once
+
+5. **Process hangs or crashes**: Use the `--log-level debug` option to identify problematic files
+
+### Advanced Configuration
+
+For advanced users, configuration can be customized:
+
+1. Create a configuration file at `~/.color_extractor_config.json`
+2. Add configuration options like:
+
+```json
+{
+  "num_colors": 8,
+  "max_dimension": 1000,
+  "cache_dir": ".cache",
+  "pdf_options": {
+    "page_size": "A4",
+    "margin": 36,
+    "show_original_image": true
+  }
+}
+```
+
+## Development
+
+### Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Setting Up Development Environment
+
+```bash
+# Clone the repository
+git clone https://github.com/MichailSemoglou/color-palette-extractor-V2.git
+cd color-palette-extractor-V2
+
+# Create a virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows, use: venv\Scripts\activate
+
+# Install development dependencies
+pip install -e ".[dev]"
+```
 
 ## Citation
 
-If you use Color Palette Extractor in your research or design project, please cite it as follows:
+If you use this tool in your research or design project, please cite it as:
 
 ```
 Semoglou, M. (2025). Color Palette Extractor V2.1 [Computer software]. 
-Retrieved from https://github.com/MichailSemoglou/color-palette-extractor
+Retrieved from https://github.com/MichailSemoglou/color-palette-extractor-V2
 ```
 
 BibTeX:
@@ -196,48 +278,10 @@ BibTeX:
   author = {Semoglou, Michail},
   title = {Color Palette Extractor V2.1},
   year = {2025},
-  url = {https://github.com/MichailSemoglou/color-palette-extractor}
+  url = {https://github.com/MichailSemoglou/color-palette-extractor-V2}
 }
 ```
 
-## Troubleshooting
-
-Here are some common issues you might encounter and how to resolve them:
-
-1. **ModuleNotFoundError**: If you see an error like `ModuleNotFoundError: No module named 'numpy'`, it means the required dependencies are not installed. Make sure you've run `pip install -r requirements.txt` in your virtual environment.
-
-2. **FileNotFoundError for font files**: If you see an error mentioning `Inter-Bold.ttf` or `Inter-Regular.ttf`, ensure these font files are in the `color_palette_extractor/fonts` directory.
-
-3. **Permission denied when saving output files**: Ensure you have write permissions in the output directory.
-
-4. **Image file not found**: Double-check the path to your image file. Use the full path if the image is not in the same directory as the script.
-
-5. **Out of memory errors**: When processing very large directories, try using smaller batch sizes or reduce the maximum image dimension by editing the configuration.
-
-6. **Process hangs or crashes**: This might occur when processing corrupt or incompatible images. Try using the `--log-level debug` option to identify problematic files.
-
-If you encounter any other issues, please open an issue on the GitHub repository with a detailed description of the problem and the steps to reproduce it.
-
-## Color Harmonies Explanation
-
-1. **Complementary**: Colors opposite each other on the color wheel, creating a high-contrast effect.
-2. **Analogous**: Colors adjacent to each other on the color wheel, creating a harmonious and cohesive look.
-3. **Triadic**: Three colors evenly spaced on the color wheel, offering a balanced and vibrant color scheme.
-4. **Tetradic**: Four colors arranged into two complementary pairs, providing a rich and varied palette.
-5. **Tints**: Lighter variations of a color, created by adding white.
-6. **Shades**: Darker variations of a color, created by adding black.
-
-## Dependencies
-
-- Python 3.6+
-- numpy (1.21.5+)
-- scikit-learn (0.24.2+)
-- Pillow (8.4.0+)
-- reportlab (3.6.2+)
-- tqdm (4.64.0+)
-
-For a complete list of dependencies with version information, see `requirements.txt`.
-
 ## License
 
-This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
