@@ -269,12 +269,20 @@ def analyze_palette_emotions(color_palette):
         recommendations = f"This color palette evokes feelings of {emotion_str}. "
         recommendations += f"It would be well-suited for brands in {industry_str}. "
         
-        # Fix for the double period issue - check if harmony effect text already ends with period
+        # Better fix for the sentence structure issue
         if dominant_harmony:
             harmony_effect = HARMONY_EFFECTS.get(dominant_harmony, "a balanced visual effect")
-            if harmony_effect.endswith("."):
+            
+            # Check if the harmony effect starts with a verb (like "Offers" or "Provides")
+            first_word = harmony_effect.split(" ")[0].lower()
+            if first_word in ["offers", "provides"]:
+                # If it starts with a verb, use "This harmony" instead of "creates"
+                recommendations += f"The {dominant_harmony} color relationship {harmony_effect[0].lower() + harmony_effect[1:]} "
+            elif harmony_effect.endswith("."):
+                # If it ends with a period, integrate it properly
                 recommendations += f"The {dominant_harmony} color relationship {harmony_effect[0].lower() + harmony_effect[1:]} "
             else:
+                # Otherwise use the original structure
                 recommendations += f"The {dominant_harmony} color relationship creates {harmony_effect}. "
         
         results["overall"]["brand_recommendations"] = recommendations
