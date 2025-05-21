@@ -95,14 +95,40 @@ def process_single_image(image_path, num_colors=6, output_dir=None,
         # Generate harmonies
         harmonies = get_harmonies(palette)
         
+        # Generate emotional analysis if requested
+        emotional_analysis = None
+        if config and config.get('emotional_analysis'):
+            try:
+                from color_palette_extractor.analysis.emotional import analyze_palette_emotions
+                from color_palette_extractor.output.emotional import save_emotional_analysis
+                
+                logger.debug(f"Generating emotional analysis for {image_path}")
+                emotional_analysis = analyze_palette_emotions(palette)
+                
+                if generate_text:
+                    emotional_filename = os.path.join(output_dir, f"{basename}_emotions.txt")
+                    save_emotional_analysis(emotional_analysis, emotional_filename)
+                    output_files.append(emotional_filename)
+                    logger.debug(f"Saved emotional analysis to {emotional_filename}")
+            except Exception as e:
+                logger.error(f"Error generating emotional analysis for {image_path}: {str(e)}")
+                logger.debug(traceback.format_exc())
+                emotional_analysis = None
+        
         # Save outputs
         if generate_text:
             save_palette_and_harmonies(palette, harmonies, filename=text_path)
             output_files.append(text_path)
         
         if generate_pdf:
-            save_palette_to_pdf(palette, harmonies, filename=pdf_path, 
-                              image_filename=image_path, config=config)
+            save_palette_to_pdf(
+                palette, 
+                harmonies, 
+                filename=pdf_path, 
+                image_filename=image_path,
+                emotional_analysis=emotional_analysis,
+                config=config
+            )
             output_files.append(pdf_path)
         
         processing_time = time.time() - start_time
@@ -168,6 +194,10 @@ def process_images(image_paths, num_colors=6, output_dir=None,
     results = []
     
     logger.info(f"Processing {total_images} images with {max_workers or 'auto'} workers")
+    
+    # If emotional analysis is enabled, log it
+    if config and config.get('emotional_analysis'):
+        logger.info("Emotional analysis is enabled")
     
     # Process images in parallel using ProcessPoolExecutor
     with ProcessPoolExecutor(max_workers=max_workers) as executor:
