@@ -32,7 +32,7 @@ except:
     logger.warning("Unable to register Inter fonts. Using default fonts instead.")
     FONTS_REGISTERED = False
 
-def save_palette_to_pdf(color_palette, harmonies, filename="color_palette.pdf", image_filename="", config=None):
+def save_palette_to_pdf(color_palette, harmonies, filename="color_palette.pdf", image_filename="", emotional_analysis=None, config=None):
     """Save the color palette and harmonies to a PDF file.
     
     Args:
@@ -40,6 +40,7 @@ def save_palette_to_pdf(color_palette, harmonies, filename="color_palette.pdf", 
         harmonies (dict): Dictionary of color harmonies from get_harmonies
         filename (str): Output PDF filename
         image_filename (str): Original image filename for display
+        emotional_analysis (dict, optional): Emotional analysis results
         config (dict, optional): Configuration options
             - page_size: PDF page size (default: A4)
             - margin: Margin in points (default: 36, 0.5 inch)
@@ -84,6 +85,10 @@ def save_palette_to_pdf(color_palette, harmonies, filename="color_palette.pdf", 
                                 leading=20, alignment=TA_LEFT, spaceAfter=10)
     heading_style = ParagraphStyle(name='Heading2', fontName=title_font, fontSize=14, 
                                  leading=16, alignment=TA_LEFT, spaceBefore=16, spaceAfter=8)
+    subheading_style = ParagraphStyle(name='Heading3', fontName=title_font, fontSize=12, 
+                                    leading=14, alignment=TA_LEFT, spaceBefore=12, spaceAfter=6)
+    normal_style = ParagraphStyle(name='Normal', fontName=body_font, fontSize=10,
+                                 leading=12, alignment=TA_LEFT, spaceBefore=6, spaceAfter=6)
     
     # Title
     title = f"Color Palette and Harmonies"
@@ -140,8 +145,80 @@ def save_palette_to_pdf(color_palette, harmonies, filename="color_palette.pdf", 
     palette_table.setStyle(palette_style)
     elements.append(palette_table)
 
+    # Add emotional analysis if available
+    if emotional_analysis:
+        elements.append(PageBreak())
+        elements.append(Paragraph("Emotional Color Analysis", heading_style))
+        
+        # Add overall analysis
+        elements.append(Paragraph("Overall Palette Impact", subheading_style))
+        
+        # Dominant emotions
+        if "overall" in emotional_analysis and "dominant_emotions" in emotional_analysis["overall"]:
+            emotions_text = "Dominant Emotions: " + ", ".join(emotional_analysis["overall"]["dominant_emotions"])
+            elements.append(Paragraph(emotions_text, normal_style))
+        
+        # Harmony analysis
+        if "overall" in emotional_analysis and "harmony_analysis" in emotional_analysis["overall"]:
+            harmony_text = "Harmony Analysis: " + emotional_analysis["overall"]["harmony_analysis"]
+            elements.append(Paragraph(harmony_text, normal_style))
+        
+        # Brand recommendations
+        if "overall" in emotional_analysis and "brand_recommendations" in emotional_analysis["overall"]:
+            brand_text = "Brand Recommendations: " + emotional_analysis["overall"]["brand_recommendations"]
+            elements.append(Paragraph(brand_text, normal_style))
+        
+        # Add individual color analysis
+        if "colors" in emotional_analysis and emotional_analysis["colors"]:
+            elements.append(Paragraph("Individual Color Emotions", subheading_style))
+            
+            # Create a table for individual colors
+            color_data = [["Color", "Name", "Emotions", "Associations", "Brand Fit"]]
+            
+            for color_info in emotional_analysis["colors"]:
+                hex_color = color_info.get("hex", "#FFFFFF")
+                color_name = color_info.get("color_name", "").capitalize()
+                emotions = ", ".join(color_info.get("emotions", [])[:3])  # Limit to top 3
+                associations = ", ".join(color_info.get("associations", [])[:3])  # Limit to top 3
+                brand_fit = ", ".join(color_info.get("brand_fit", [])[:3])  # Limit to top 3
+                
+                color_data.append([
+                    hex_color,
+                    color_name,
+                    emotions,
+                    associations,
+                    brand_fit
+                ])
+            
+            # Create and style the table
+            color_table = Table(color_data, colWidths=[60, 70, 120, 120, 120])
+            
+            table_style = TableStyle([
+                ('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey),
+                ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
+                ('ALIGN', (0, 0), (-1, 0), 'CENTER'),
+                ('FONTNAME', (0, 0), (-1, 0), title_font),
+                ('FONTSIZE', (0, 0), (-1, 0), 10),
+                ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                ('GRID', (0, 0), (-1, -1), 1, colors.black),
+            ])
+            
+            # Add background colors to the first column
+            for i, row in enumerate(color_data[1:], 1):
+                hex_color = row[0]
+                table_style.add('BACKGROUND', (0, i), (0, i), colors.HexColor(hex_color))
+                text_color = colors.white if is_dark(hex_color) else colors.black
+                table_style.add('TEXTCOLOR', (0, i), (0, i), text_color)
+            
+            color_table.setStyle(table_style)
+            elements.append(color_table)
+
     # Add harmonies
     harmony_pages = ["Original Color Palette"]  # Start with the palette page
+    # Add emotional analysis page if applicable
+    if emotional_analysis:
+        harmony_pages.append("Emotional Analysis")
+        
     for harmony_type, harmony_sets in harmonies.items():
         # Add a page break before "Complementary Harmonies"
         if harmony_type == "complementary":
