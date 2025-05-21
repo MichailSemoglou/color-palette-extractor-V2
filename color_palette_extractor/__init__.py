@@ -4,7 +4,7 @@ Color Palette Extractor
 A tool to extract color palettes from images and generate harmonies.
 """
 
-__version__ = "2.0.0"
+__version__ = "2.1.0"
 __author__ = "Michail Semoglou"
 
 import os
@@ -16,7 +16,7 @@ FONTS_DIR = os.path.join(PACKAGE_DIR, "fonts")
 # Define version info
 VERSION_INFO = {
     "major": 2,
-    "minor": 0,
+    "minor": 1,
     "patch": 0,
     "status": "stable",
 }
