@@ -12,7 +12,6 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-# Expanded color psychology database with design-appropriate terms
 COLOR_EMOTIONS = {
     # Reds
     "red": {
@@ -29,6 +28,16 @@ COLOR_EMOTIONS = {
         "emotions": ["dynamic", "bold", "intense", "passionate", "dramatic"],
         "associations": ["strength", "power", "determination", "desire"],
         "brand_fit": ["fashion", "cosmetics", "performance brands", "luxury"]
+    },
+    "maroon": {
+        "emotions": ["serious", "controlled", "thoughtful", "intense", "mature"],
+        "associations": ["autumn", "earth", "stability", "confidence"],
+        "brand_fit": ["universities", "law firms", "financial services", "heritage brands"]
+    },
+    "scarlet": {
+        "emotions": ["vivid", "adventurous", "confident", "courageous", "luxurious"],
+        "associations": ["passion", "luxury", "courage", "nobility"],
+        "brand_fit": ["luxury fashion", "sports cars", "premium cosmetics", "high-end retail"]
     },
     
     # Oranges
@@ -47,6 +56,16 @@ COLOR_EMOTIONS = {
         "associations": ["ocean", "warmth", "vitality", "tropics"],
         "brand_fit": ["beach wear", "tropical products", "cosmetics", "wellness"]
     },
+    "apricot": {
+        "emotions": ["gentle", "warm", "approachable", "soft", "inviting"],
+        "associations": ["comfort", "hospitality", "freshness", "care"],
+        "brand_fit": ["hospitality", "baby products", "wellness", "home goods"]
+    },
+    "peach": {
+        "emotions": ["friendly", "warm", "caring", "gentle", "soft"],
+        "associations": ["health", "vitality", "youthfulness", "sweetness"],
+        "brand_fit": ["beauty products", "health foods", "children's brands", "hospitality"]
+    },
     
     # Yellows
     "yellow": {
@@ -63,6 +82,16 @@ COLOR_EMOTIONS = {
         "emotions": ["earthy", "warming", "complex", "spicy", "distinctive"],
         "associations": ["autumn", "spice", "warmth", "coziness"],
         "brand_fit": ["autumn fashion", "craft brands", "artisanal food", "home decor"]
+    },
+    "amber": {
+        "emotions": ["energizing", "glowing", "rich", "warm", "inviting"],
+        "associations": ["honey", "precious stones", "ancient", "preservation"],
+        "brand_fit": ["jewelry", "perfume", "craft beverages", "luxury goods"]
+    },
+    "lemon": {
+        "emotions": ["zesty", "fresh", "energetic", "clean", "vibrant"],
+        "associations": ["citrus", "freshness", "cleanliness", "summer"],
+        "brand_fit": ["cleaning products", "beverages", "summer products", "fresh foods"]
     },
     
     # Greens
@@ -86,6 +115,21 @@ COLOR_EMOTIONS = {
         "associations": ["nature", "durability", "tradition", "peace"],
         "brand_fit": ["outdoor wear", "military-inspired", "eco-friendly", "culinary"]
     },
+    "emerald": {
+        "emotions": ["luxurious", "vibrant", "sophisticated", "rich", "regal"],
+        "associations": ["precious stones", "wealth", "growth", "harmony"],
+        "brand_fit": ["jewelry", "luxury brands", "high-end fashion", "premium services"]
+    },
+    "forest": {
+        "emotions": ["deep", "mysterious", "strong", "natural", "protective"],
+        "associations": ["wilderness", "strength", "depth", "shelter"],
+        "brand_fit": ["outdoor equipment", "environmental organizations", "men's products", "adventure brands"]
+    },
+    "lime": {
+        "emotions": ["vibrant", "energetic", "fresh", "youthful", "modern"],
+        "associations": ["citrus", "energy", "technology", "innovation"],
+        "brand_fit": ["energy drinks", "tech startups", "youth brands", "sports products"]
+    },
     
     # Blues
     "teal": {
@@ -108,6 +152,21 @@ COLOR_EMOTIONS = {
         "associations": ["sky", "freedom", "inspiration", "air", "clarity"],
         "brand_fit": ["air travel", "cloud services", "mindfulness apps", "children's brands"]
     },
+    "turquoise": {
+        "emotions": ["refreshing", "tropical", "calming", "clear", "sophisticated"],
+        "associations": ["ocean", "gemstones", "clarity", "communication"],
+        "brand_fit": ["travel", "spa & wellness", "jewelry", "water sports"]
+    },
+    "cobalt": {
+        "emotions": ["bold", "electric", "dynamic", "modern", "confident"],
+        "associations": ["technology", "innovation", "depth", "vibrancy"],
+        "brand_fit": ["tech companies", "sports brands", "modern design", "automotive"]
+    },
+    "periwinkle": {
+        "emotions": ["serene", "soft", "nostalgic", "gentle", "dreamy"],
+        "associations": ["flowers", "calmness", "imagination", "serenity"],
+        "brand_fit": ["children's products", "home decor", "creative services", "wellness"]
+    },
     
     # Purples
     "purple": {
@@ -125,6 +184,21 @@ COLOR_EMOTIONS = {
         "associations": ["night sky", "depth", "perception", "intuition"],
         "brand_fit": ["spiritual products", "sleep aids", "mindfulness", "sophisticated design"]
     },
+    "violet": {
+        "emotions": ["imaginative", "sensitive", "artistic", "mystical", "unique"],
+        "associations": ["creativity", "imagination", "spirituality", "individuality"],
+        "brand_fit": ["art supplies", "creative agencies", "alternative medicine", "boutique brands"]
+    },
+    "plum": {
+        "emotions": ["rich", "sophisticated", "dramatic", "elegant", "mature"],
+        "associations": ["depth", "luxury", "autumn", "richness"],
+        "brand_fit": ["wine brands", "luxury fashion", "upscale restaurants", "premium cosmetics"]
+    },
+    "mauve": {
+        "emotions": ["delicate", "refined", "understated", "vintage", "feminine"],
+        "associations": ["nostalgia", "elegance", "subtlety", "romance"],
+        "brand_fit": ["vintage fashion", "wedding services", "boutique hotels", "artisanal products"]
+    },
     
     # Pinks
     "pink": {
@@ -141,6 +215,11 @@ COLOR_EMOTIONS = {
         "emotions": ["vibrant", "energetic", "confident", "youthful", "bold"],
         "associations": ["energy", "flamboyance", "confidence", "fashion"],
         "brand_fit": ["fashion", "cosmetics", "youth brands", "entertainment"]
+    },
+    "salmon": {
+        "emotions": ["warm", "friendly", "approachable", "energetic", "healthy"],
+        "associations": ["warmth", "vitality", "freshness", "health"],
+        "brand_fit": ["health foods", "fitness", "wellness products", "hospitality"]
     },
     
     # Browns
@@ -163,6 +242,11 @@ COLOR_EMOTIONS = {
         "emotions": ["rich", "indulgent", "warm", "luxurious", "comforting"],
         "associations": ["indulgence", "richness", "sweetness", "depth", "comfort"],
         "brand_fit": ["confectionery", "luxury goods", "coffee", "gourmet foods"]
+    },
+    "taupe": {
+        "emotions": ["sophisticated", "timeless", "flexible", "calming", "elegant"],
+        "associations": ["neutrality", "sophistication", "versatility", "refinement"],
+        "brand_fit": ["interior design", "luxury fashion", "architectural firms", "premium brands"]
     },
     
     # Neutrals
@@ -195,16 +279,20 @@ COLOR_EMOTIONS = {
         "emotions": ["classic", "soft", "warm", "elegant", "timeless"],
         "associations": ["tradition", "elegance", "subtlety", "warmth", "heritage"],
         "brand_fit": ["bridal", "luxury papers", "cosmetics", "high-end fashion"]
+    },
+    "cream": {
+        "emotions": ["gentle", "warm", "soothing", "classic", "comfortable"],
+        "associations": ["softness", "comfort", "luxury", "natural"],
+        "brand_fit": ["dairy products", "bedding", "luxury hotels", "natural cosmetics"]
     }
 }
 
-# Improved harmony psychology effects with design-relevant terminology
 HARMONY_EFFECTS = {
-    "complementary": "Creates a vibrant, high-contrast palette that commands attention. Ideal for brands wanting to stand out or create visual energy. Effective for call-to-action elements and creating bold visual impact.",
-    "analogous": "Creates a harmonious, cohesive palette with natural flow and low visual tension. Perfect for creating a unified, professional look that feels balanced and intentionally designed.",
-    "triadic": "Offers visual vibrancy while maintaining perceptual balance. Well-suited for creative and playful brands that still need visual harmony and compositional integrity.",
-    "tetradic": "Provides a rich, varied palette with multiple accent possibilities. Excellent for brands with diverse product lines or complex visual communication needs.",
-    "monochromatic": "Creates a sophisticated, cohesive palette with subtle depth. Particularly effective for luxury brands, minimalist designs, and contexts where content should be the focal point."
+    "complementary": "vibrant, high-contrast palette that commands attention. Ideal for brands wanting to stand out or create visual energy. Effective for call-to-action elements and creating bold visual impact",
+    "analogous": "harmonious, cohesive palette with natural flow and low visual tension. Perfect for creating a unified, professional look that feels balanced and intentionally designed",
+    "triadic": "visual vibrancy while maintaining perceptual balance. Well-suited for creative and playful brands that still need visual harmony and compositional integrity",
+    "tetradic": "rich, varied palette with multiple accent possibilities. Excellent for brands with diverse product lines or complex visual communication needs",
+    "monochromatic": "sophisticated, cohesive palette with subtle depth. Particularly effective for luxury brands, minimalist designs, and contexts where content should be the focal point"
 }
 
 def identify_color_name(hsv):
@@ -217,122 +305,167 @@ def identify_color_name(hsv):
         str: Detailed color name
     """
     h, s, v = hsv
-    
-    # Convert h to degrees (0-360)
     h_deg = h * 360
     
-    # Handle grayscale and near-grayscale colors
-    if s < 0.12:  # Very low saturation indicates grayscale
-        if v < 0.10:  # Very dark
+    if s < 0.08:
+        if v < 0.10:
             return "black"
-        elif v < 0.25:  # Dark
+        elif v < 0.25:
             return "charcoal"
-        elif v < 0.60:  # Mid-tone
+        elif v < 0.60:
             return "gray"
-        elif v < 0.90:  # Light
+        elif v < 0.90:
             return "silver"
-        else:  # Very light
+        else:
             return "white"
     
-    # Handle very dark colors (nearly black) regardless of hue
     if v < 0.12:
         return "black"
     
-    # Handle off-whites and ivories
-    if v > 0.85 and s < 0.20:
-        if h_deg >= 30 and h_deg < 90:  # Warm off-white
+    if v > 0.90 and s < 0.15:
+        if h_deg >= 30 and h_deg < 60:
+            return "cream"
+        elif h_deg >= 15 and h_deg < 30:
             return "ivory"
-        else:  # Cool or neutral off-white
+        else:
             return "white"
     
-    # Handle browns (low value, low-to-mid saturation, in red-yellow range)
     if v < 0.65 and s < 0.65 and ((h_deg >= 0 and h_deg < 60) or h_deg >= 330):
-        if v < 0.20:  # Very dark brown
+        if v < 0.20:
             return "chocolate"
-        elif v < 0.35:  # Dark brown
+        elif v < 0.35:
             return "brown"
-        elif v < 0.55:  # Medium brown
-            if h_deg > 20 and h_deg < 40 and s > 0.40:  # More orange-brown
+        elif v < 0.55:
+            if h_deg > 20 and h_deg < 40 and s > 0.40:
                 return "terracotta"
             else:
                 return "brown"
-        else:  # Light brown
-            if s < 0.35:  # Low saturation light brown
+        else:
+            if s < 0.25:
+                return "taupe"
+            elif s < 0.35:
                 return "beige"
-            else:  # Medium-high saturation light brown
+            else:
                 return "tan"
     
-    # Handle different hue ranges with nuanced names
-    # Reds (0-10, 350-360)
     if (h_deg < 10 or h_deg >= 350) and s > 0.20:
-        if v < 0.40:
+        if v < 0.35:
+            return "maroon"
+        elif v < 0.50:
             return "burgundy"
-        elif v < 0.60:
+        elif v < 0.65:
             return "crimson"
+        elif s > 0.80:
+            return "scarlet"
         else:
             return "red"
     
-    # Oranges (10-40)
+    elif h_deg < 25 and s > 0.20:
+        if v > 0.85 and s < 0.50:
+            return "salmon"
+        elif v > 0.80 and s < 0.40:
+            return "peach"
+        elif h_deg > 15:
+            return "coral"
+        else:
+            return "red"
+    
     elif h_deg < 40 and s > 0.20:
         if v < 0.50:
             return "terracotta"
+        elif v > 0.85 and s < 0.50:
+            return "apricot"
+        elif v > 0.80 and s < 0.60:
+            return "peach"
         elif h_deg > 25 and s > 0.60 and v > 0.80:
             return "coral"
         else:
             return "orange"
     
-    # Yellows (40-70)
-    elif h_deg < 70 and s > 0.20:
-        if s > 0.50 and v > 0.80:  # Bright and saturated
-            return "yellow"
-        elif v > 0.70 and s > 0.50:  # Bright but less saturated
+    elif h_deg < 55 and s > 0.20:
+        if s > 0.80 and v > 0.85:
+            return "amber"
+        elif v > 0.85 and s > 0.70:
             return "gold"
-        else:  # Darker yellow
+        elif v < 0.70:
+            return "mustard"
+        else:
+            return "yellow"
+    
+    elif h_deg < 70 and s > 0.20:
+        if s > 0.85 and v > 0.90:
+            return "lemon"
+        elif s > 0.50 and v > 0.80:
+            return "yellow"
+        elif v > 0.70 and s > 0.50:
+            return "gold"
+        else:
             return "mustard"
     
-    # Greens (70-160)
-    elif h_deg < 160 and s > 0.15:
-        if h_deg < 80 and v < 0.60:  # Yellow-green, darker
+    elif h_deg < 90 and s > 0.15:
+        if h_deg < 80 and v < 0.60:
             return "olive"
-        elif h_deg > 140 and v > 0.70:  # Blue-green, lighter
-            return "mint"
-        elif s < 0.40 and v < 0.70:  # Less saturated, medium-dark
-            return "sage"
+        elif s > 0.80 and v > 0.80:
+            return "lime"
         else:
             return "green"
     
-    # Teals/Cyans (160-195)
-    elif h_deg < 195 and s > 0.15:
-        return "teal"
+    elif h_deg < 150 and s > 0.15:
+        if v < 0.40:
+            return "forest"
+        elif h_deg > 140 and v > 0.70:
+            return "mint"
+        elif s < 0.40 and v < 0.70:
+            return "sage"
+        elif s > 0.70 and v > 0.70:
+            return "emerald"
+        else:
+            return "green"
     
-    # Blues (195-240)
+    elif h_deg < 195 and s > 0.15:
+        if h_deg > 180:
+            return "turquoise"
+        else:
+            return "teal"
+    
     elif h_deg < 240 and s > 0.15:
-        if s > 0.30 and v < 0.50:  # Dark and moderately saturated
+        if s > 0.30 and v < 0.50:
             return "navy"
-        elif v > 0.75 and s < 0.50:  # Light and less saturated
+        elif v > 0.75 and s < 0.50:
             return "sky blue"
+        elif s > 0.80 and v > 0.70:
+            return "cobalt"
         else:
             return "blue"
     
-    # Purples (240-290)
-    elif h_deg < 290 and s > 0.15:
-        if h_deg < 260 and s > 0.50 and v < 0.60:  # Deep purple-blue
+    elif h_deg < 260 and s > 0.15:
+        if s > 0.50 and v < 0.60:
             return "indigo"
-        elif v > 0.70 and s < 0.50:  # Light and less saturated
+        elif v > 0.80 and s < 0.40:
+            return "periwinkle"
+        else:
+            return "blue"
+    
+    elif h_deg < 290 and s > 0.15:
+        if h_deg < 270 and v > 0.70 and s < 0.50:
             return "lavender"
+        elif v < 0.50:
+            return "plum"
+        elif s < 0.50:
+            return "mauve"
+        elif h_deg < 280:
+            return "violet"
         else:
             return "purple"
     
-    # Pinks (290-350)
     elif h_deg < 350 and s > 0.15:
-        if s > 0.70 and v > 0.70:  # Bright and highly saturated
+        if s > 0.70 and v > 0.70:
             return "fuchsia"
-        elif h_deg < 320 and s < 0.60:  # Less saturated, more muted
+        elif h_deg < 320 and s < 0.60:
             return "rose"
         else:
             return "pink"
     
-    # Default fallback - should rarely be reached with above logic
     return "gray"
 
 def analyze_palette_emotions(color_palette):
@@ -356,33 +489,31 @@ def analyze_palette_emotions(color_palette):
     emotion_counts = {}
     color_names = []
     
-    # Analyze individual colors
     for i, color in enumerate(color_palette):
         hex_color, rgb, cmyk = color
         
-        # Convert RGB to HSV
         r, g, b = [val/255 for val in rgb]
         h, s, v = colorsys.rgb_to_hsv(r, g, b)
         
-        # Identify color name with improved function
         color_name = identify_color_name((h, s, v))
         color_names.append(color_name)
         
-        # Get emotional associations - fall back to basic color if specific shade not found
         base_color = color_name
         if color_name not in COLOR_EMOTIONS:
-            # Map specific shades to their base colors for emotion lookup
             color_mapping = {
-                "burgundy": "red", "crimson": "red",
-                "terracotta": "orange", "coral": "orange",
-                "gold": "yellow", "mustard": "yellow",
-                "sage": "green", "mint": "green", "olive": "green",
-                "navy": "blue", "sky blue": "blue",
-                "lavender": "purple", "indigo": "purple",
-                "rose": "pink", "fuchsia": "pink",
-                "beige": "brown", "tan": "brown", "chocolate": "brown",
+                "burgundy": "red", "crimson": "red", "maroon": "red", "scarlet": "red",
+                "terracotta": "orange", "coral": "orange", "apricot": "orange", "peach": "orange",
+                "gold": "yellow", "mustard": "yellow", "amber": "yellow", "lemon": "yellow",
+                "sage": "green", "mint": "green", "olive": "green", "emerald": "green", 
+                "forest": "green", "lime": "green",
+                "navy": "blue", "sky blue": "blue", "turquoise": "blue", "cobalt": "blue", 
+                "periwinkle": "blue",
+                "lavender": "purple", "indigo": "purple", "violet": "purple", "plum": "purple", 
+                "mauve": "purple",
+                "rose": "pink", "fuchsia": "pink", "salmon": "pink",
+                "beige": "brown", "tan": "brown", "chocolate": "brown", "taupe": "brown",
                 "charcoal": "gray", "silver": "gray",
-                "ivory": "white"
+                "ivory": "white", "cream": "white"
             }
             base_color = color_mapping.get(color_name, "gray")
         
@@ -390,7 +521,6 @@ def analyze_palette_emotions(color_palette):
         associations = COLOR_EMOTIONS.get(color_name, COLOR_EMOTIONS.get(base_color, {})).get("associations", [])
         brand_fit = COLOR_EMOTIONS.get(color_name, COLOR_EMOTIONS.get(base_color, {})).get("brand_fit", [])
         
-        # Add to results
         color_result = {
             "hex": hex_color,
             "color_name": color_name,
@@ -401,34 +531,32 @@ def analyze_palette_emotions(color_palette):
         }
         results["colors"].append(color_result)
         
-        # Count emotions for overall analysis
         for emotion in emotions:
             if emotion in emotion_counts:
                 emotion_counts[emotion] += 1
             else:
                 emotion_counts[emotion] = 1
     
-    # Determine dominant emotions
     sorted_emotions = sorted(emotion_counts.items(), key=lambda x: x[1], reverse=True)
     results["overall"]["dominant_emotions"] = [emotion for emotion, count in sorted_emotions[:3]]
     
-    # Analyze color distribution
     color_name_counts = {}
     for name in color_names:
-        # Group similar colors for harmony analysis
         base_name = name
-        # Map specific shades to their base colors for harmony analysis
         color_groups = {
-            "burgundy": "red", "crimson": "red",
-            "terracotta": "orange", "coral": "orange",
-            "gold": "yellow", "mustard": "yellow",
-            "sage": "green", "mint": "green", "olive": "green",
-            "navy": "blue", "sky blue": "blue",
-            "lavender": "purple", "indigo": "purple",
-            "rose": "pink", "fuchsia": "pink",
-            "beige": "brown", "tan": "brown", "chocolate": "brown",
+            "burgundy": "red", "crimson": "red", "maroon": "red", "scarlet": "red",
+            "terracotta": "orange", "coral": "orange", "apricot": "orange", "peach": "orange",
+            "gold": "yellow", "mustard": "yellow", "amber": "yellow", "lemon": "yellow",
+            "sage": "green", "mint": "green", "olive": "green", "emerald": "green",
+            "forest": "green", "lime": "green",
+            "navy": "blue", "sky blue": "blue", "turquoise": "blue", "cobalt": "blue",
+            "periwinkle": "blue",
+            "lavender": "purple", "indigo": "purple", "violet": "purple", "plum": "purple",
+            "mauve": "purple",
+            "rose": "pink", "fuchsia": "pink", "salmon": "pink",
+            "beige": "brown", "tan": "brown", "chocolate": "brown", "taupe": "brown",
             "charcoal": "gray", "silver": "gray",
-            "ivory": "white"
+            "ivory": "white", "cream": "white"
         }
         base_name = color_groups.get(name, name)
         
@@ -437,12 +565,10 @@ def analyze_palette_emotions(color_palette):
         else:
             color_name_counts[base_name] = 1
     
-    # Store original color names for display
     unique_colors = list(set(color_names))
     
     color_diversity = len(color_name_counts)
     
-    # Analyze harmony
     base_colors = list(color_name_counts.keys())
     has_complementary = len(set(["red", "green"]).intersection(set(base_colors))) == 2 or \
                        len(set(["blue", "orange"]).intersection(set(base_colors))) == 2 or \
@@ -470,55 +596,35 @@ def analyze_palette_emotions(color_palette):
     elif color_diversity == 3:
         dominant_harmony = "triadic"
     else:
-        # Default if we can't determine
         dominant_harmony = "mixed"
     
-    # Add harmony analysis
     if dominant_harmony in HARMONY_EFFECTS:
         results["overall"]["harmony_analysis"] = HARMONY_EFFECTS[dominant_harmony]
     else:
         results["overall"]["harmony_analysis"] = "Mixed color harmony providing a balanced visual effect."
     
-    # Generate brand recommendations
     primary_colors = [name for name, count in sorted(color_name_counts.items(), key=lambda x: x[1], reverse=True)]
     
     if not primary_colors:
         results["overall"]["brand_recommendations"] = "Unable to determine brand recommendations."
     else:
         industry_fits = []
-        for color in primary_colors[:2]:  # Use top two colors
+        for color in primary_colors[:2]:
             if color in COLOR_EMOTIONS:
                 industry_fits.extend(COLOR_EMOTIONS[color]["brand_fit"])
         
-        top_industries = list(set(industry_fits))[:3]  # Get unique industries, limit to top 3
+        top_industries = list(set(industry_fits))[:3]
         
         emotion_str = ", ".join(results["overall"]["dominant_emotions"])
         industry_str = ", ".join(top_industries) if top_industries else "various industries"
-        color_str = ", ".join(unique_colors[:4])  # List up to 4 unique color names
+        color_str = ", ".join(unique_colors[:4])
         
         recommendations = f"This color palette features {color_str} and evokes feelings of {emotion_str}. "
         recommendations += f"It would be well-suited for brands in {industry_str}. "
         
-        # Improved harmony description with guaranteed correct sentence structure
-        if dominant_harmony:
-            harmony_effect = HARMONY_EFFECTS.get(dominant_harmony, "a balanced visual effect")
-            
-            # Extract first word to check for potential redundancy
-            first_word = harmony_effect.split()[0].lower()
-            
-            if first_word == "creates":
-                # If harmony effect starts with "Creates", extract everything after that word
-                effect_content = harmony_effect[len("Creates"):].strip()
-                # And start with a clean sentence
-                recommendations += f"The {dominant_harmony} color relationship creates{effect_content} "
-            elif first_word in ["offers", "provides"]:
-                # If it starts with another verb, reword the sentence to avoid redundancy
-                verb = first_word
-                effect_content = harmony_effect[len(verb):].strip()
-                recommendations += f"The {dominant_harmony} color relationship {verb}{effect_content} "
-            else:
-                # For any other pattern, use a generic connector
-                recommendations += f"The {dominant_harmony} color relationship delivers {harmony_effect[0].lower() + harmony_effect[1:]} "
+        if dominant_harmony and dominant_harmony in HARMONY_EFFECTS:
+            harmony_effect = HARMONY_EFFECTS[dominant_harmony]
+            recommendations += f"The {dominant_harmony} color relationship creates a {harmony_effect}."
         
         results["overall"]["brand_recommendations"] = recommendations
     
