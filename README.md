@@ -191,6 +191,19 @@ The tool generates several types of color harmonies:
 | **Tints** | Lighter variations of a color (adding white) |
 | **Shades** | Darker variations of a color (adding black) |
 
+### Color Accuracy Note
+
+The emotional analysis feature maps extracted colors to a predefined set of color categories in our database. Since we work with a finite number of color definitions, some matches may not be entirely accurate, particularly for:
+
+- Colors that fall between our predefined categories (e.g., a blue-green might be categorized as either blue or green)
+- Very specific shades that don't have exact matches in our color database
+- Unique or unusual colors that may be mapped to their nearest neighbor
+- Colors with subtle variations that might all map to the same category
+
+The tool provides its best interpretation by finding the closest match in our color database. For critical color analysis applications, consider:
+- Treating the emotional analysis as a general guide rather than absolute categorization
+- Manually verifying color interpretations for important branding decisions
+
 ## Emotional Color Analysis
 
 The emotional analysis feature provides insights into:
