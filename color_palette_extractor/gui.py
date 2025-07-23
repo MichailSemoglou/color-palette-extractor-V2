@@ -14,14 +14,28 @@ import threading
 from datetime import datetime
 from PIL import Image, ImageTk
 
-from .. import __version__
-from .core import extract_color_palette
-from .harmonies import get_harmonies
-from color_palette_extractor.output.pdf import save_palette_to_pdf
-from color_palette_extractor.output.text import save_palette_and_harmonies
-from .batch import process_images, process_folder
-from color_palette_extractor.utils.image import find_images_in_directory, is_valid_image
-from .config import ConfigManager
+if __name__ == "__main__":
+    import sys
+    import os
+    sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+    
+    from color_palette_extractor import __version__
+    from color_palette_extractor.core import extract_color_palette
+    from color_palette_extractor.harmonies import get_harmonies
+    from color_palette_extractor.output.pdf import save_palette_to_pdf
+    from color_palette_extractor.output.text import save_palette_and_harmonies
+    from color_palette_extractor.batch import process_images, process_folder
+    from color_palette_extractor.utils.image import find_images_in_directory, is_valid_image
+    from color_palette_extractor.config import ConfigManager
+else:
+    from .. import __version__
+    from .core import extract_color_palette
+    from .harmonies import get_harmonies
+    from color_palette_extractor.output.pdf import save_palette_to_pdf
+    from color_palette_extractor.output.text import save_palette_and_harmonies
+    from .batch import process_images, process_folder
+    from color_palette_extractor.utils.image import find_images_in_directory, is_valid_image
+    from .config import ConfigManager
 
 logger = logging.getLogger(__name__)
 
